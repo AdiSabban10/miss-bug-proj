@@ -3,7 +3,7 @@
     "_id": "OcdBb",
     "title": "Button",
     "description": "problem when clicking button",
-    "severity": 2,
+    "severity": 3,
     "createdAt": 1542107359454
   },
   {
@@ -21,10 +21,10 @@
     "createdAt": 1542107359454
   },
   {
-    "_id": "41ZVS",
-    "title": "bug1",
-    "description": "bug2222",
-    "severity": 1,
-    "createdAt": 1718544192874
+    "_id": "4sfGj",
+    "title": "bug33",
+    "description": "sssssssssss",
+    "severity": 2,
+    "createdAt": 1718550468058
   }
 ]

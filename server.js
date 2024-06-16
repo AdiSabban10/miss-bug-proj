@@ -6,7 +6,7 @@ import { loggerService } from './services/logger.service.js'
 
 const app = express()
 
-// app.use(express.static('public'))
+app.use(express.static('public'))
 app.use(cookieParser())
 
 // Express Routing:
@@ -51,4 +51,3 @@ app.get('/api/bug/:id/remove', (req, res) => {
 
 const port = 3030
 app.listen(port, () => loggerService.info(`Server listening on port http://127.0.0.1:${port}/`))
-// app.listen(port, () => loggerService.info(`Server listening on port http://127.0.0.1:3030/`))
