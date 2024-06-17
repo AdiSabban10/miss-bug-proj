@@ -6,7 +6,7 @@ export const bugService = {
     remove,
     save,
     getDefaultFilter,
-    
+    onDownloadPdf,
 }
 
 function query(filterBy) {
@@ -17,8 +17,8 @@ function query(filterBy) {
 
 function getById(bugId) {
     return axios.get(BASE_URL + `/${bugId}`)
-    .then(res => res.data)
-    .catch(console.log)
+        .then(res => res.data)
+        .catch(console.log)
 }
 
 function remove(bugId) {
@@ -30,14 +30,19 @@ function save(bug) {
     const { _id , title, description , severity, createdAt } = bug
     if (bug._id) {
         return axios.get(BASE_URL + `/save?_id=${_id}&title=${title}&description=${description}&severity=${severity}&createdAt=${createdAt}`)
-        .then(res => res.data)
+            .then(res => res.data)
     } else {
         return axios.get(BASE_URL + `/save?title=${title}&description=${description}&severity=${severity}`)
-        .then(res => res.data)
+            .then(res => res.data)
     }
 }
 
 function getDefaultFilter() {
     return { txt: '', minSeverity: 0 }
+}
+
+function onDownloadPdf(){
+    return axios.get(BASE_URL + '/download')
+        .then(res => res.data)
 }
 

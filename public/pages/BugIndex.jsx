@@ -67,12 +67,18 @@ export function BugIndex() {
       })
   }
 
+  function onDownloadPdf(){
+    bugService.onDownloadPdf()
+  }
+
+
   if (!bugs || !bugs.length) return (<h1>no bugs today</h1>)
     
   return (
     <main>
       <h3>Bugs App</h3>
       <main>
+        <button onClick={onDownloadPdf} >Download PDF</button>
         <BugFilter filterBy={filterBy} setFilterBy={setFilterBy}/>
         <button onClick={onAddBug}>Add Bug ⛐</button>
         <BugList bugs={bugs} onRemoveBug={onRemoveBug} onEditBug={onEditBug} />
