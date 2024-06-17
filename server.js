@@ -12,7 +12,9 @@ app.use(cookieParser())
 // Express Routing:
 
 app.get('/api/bug', (req, res) => {
-    bugService.query()
+    const { txt, minSeverity } = req.query
+
+    bugService.query({ txt, minSeverity: +minSeverity })
 	    .then(bugs => res.send(bugs))
         .catch(err => {
             loggerService.error(`Couldn't get bugs...`)
@@ -39,7 +41,7 @@ app.get('/api/bug/:id', (req, res) => {
 
     var visitedBugs = req.cookies.visitedBugs || []
 
-    if (visitedBugs.length >= 3) res.status(401).send('BUG LIMIT REACHED')
+    if (visitedBugs.length >= 3) res.status(401).send('Wait for a bit')
     if (!visitedBugs.includes(id)) visitedBugs.push(id)
     res.cookie('visitedBugs', visitedBugs, { maxAge: 7000 })
 

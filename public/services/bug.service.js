@@ -5,11 +5,13 @@ export const bugService = {
     getById,
     remove,
     save,
+    getDefaultFilter,
     
 }
 
-function query() {
-    return axios.get(BASE_URL)
+function query(filterBy) {
+    const {txt , minSeverity = +minSeverity} = filterBy
+    return axios.get(`${BASE_URL}?txt=${txt}&minSeverity=${minSeverity}`)
         .then(res => res.data)
 }
 
@@ -33,5 +35,9 @@ function save(bug) {
         return axios.get(BASE_URL + `/save?title=${title}&description=${description}&severity=${severity}`)
         .then(res => res.data)
     }
+}
+
+function getDefaultFilter() {
+    return { txt: '', minSeverity: 0 }
 }
 
