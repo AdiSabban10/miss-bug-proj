@@ -13,8 +13,8 @@
 @import "cmps/UserMsg.css";
 @import "cmps/ToggleButton.css";
 
-@import "cmps/CarFilter.css";
-@import "cmps/CarList.css";
-@import "cmps/CarPreview.css";
-@import "cmps/CarDetails.css";
-@import "cmps/CarEdit.css";
+@import "cmps/BugFilter.css";
+@import "cmps/BugList.css";
+@import "cmps/BugPreview.css";
+@import "cmps/BugDetails.css";
+@import "cmps/BugEdit.css";

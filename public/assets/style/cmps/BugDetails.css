@@ -1,17 +1,17 @@
-.car-details {
+.bug-details {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
 }
-.car-details h1 {
+.bug-details h1 {
     color: var(--clr1);
     font-size: 2em;
     
 }
-.car-details h5 {
+.bug-details h5 {
     color: var(--clr2);
 }
-.car-details img {
+.bug-details img {
     max-width: 200px;
     display: block;
     margin: auto;
