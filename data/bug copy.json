@@ -4,27 +4,31 @@
       "title": "Button",
       "description": "problem when clicking button",
       "severity": 2,
-      "createdAt": 1542107359454
+      "createdAt": 1542107359454,
+      "labels" : ["critical", "need-CR", "dev-branch"]
     },
     {
       "_id": "U3Feb",
       "title": "Error while watching",
       "description": "problem when clicking play",
       "severity": 2,
-      "createdAt": 1542107359454
+      "createdAt": 1542107359454,
+      "labels" : ["need-CR", "dev-branch"]
     },
     {
       "_id": "g28bX",
       "title": "Warning appears",
       "description": "warning appears when clicking edit",
       "severity": 3,
-      "createdAt": 1542107359454
+      "createdAt": 1542107359454,
+      "labels" : ["critical", "dev-branch"]
     },
     {
       "_id": "GwjbR",
       "title": "bug2",
       "description": "problem problem",
       "severity": 2,
-      "createdAt": 1718295576268
+      "createdAt": 1718295576268,
+      "labels" : ["critical", "need-CR"]
     }
   ]

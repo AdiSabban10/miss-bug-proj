@@ -18,7 +18,7 @@ export function BugFilter({ filterBy, onSetFilterBy }) {
                 break;
 
             case 'checkbox':
-                value = target.checked
+                value = target.checked ? '-1' : '1'
                 break
 
             default:
@@ -33,8 +33,8 @@ export function BugFilter({ filterBy, onSetFilterBy }) {
         setFilterByToEdit(prev => ({ ...prev, pageIdx: prev.pageIdx + diff }))
     }
 
-    const { txt, severity } = filterByToEdit
-    
+    const { txt, severity, sortBy, sortDir } = filterByToEdit
+
     return (
         <section className="bug-filter">
             <h2>Filter Our Bugs</h2>
@@ -57,6 +57,23 @@ export function BugFilter({ filterBy, onSetFilterBy }) {
                 name="minSeverity"
                 id="minSeverity"
                 placeholder="By min Severity"
+            />
+
+            <label htmlFor="sortBy">Sort by:</label>
+            <select name="sortBy" value={sortBy} onChange={handleChange}>
+                <option value="">None</option>
+                <option value="title">Title</option>
+                <option value="severity">Severity</option>
+                <option value="createdAt">Created At</option>
+            </select>
+
+            <label htmlFor="sortDir">Sort descending:</label>
+            <input
+                type="checkbox"
+                name="sortDir"
+                id="sortDir"
+                checked={sortDir === '-1'}
+                onChange={handleChange}
             />
 
             <button onClick={() => onGetPage(-1)}>-</button>
