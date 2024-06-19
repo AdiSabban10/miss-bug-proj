@@ -30,5 +30,14 @@
       "severity": 2,
       "createdAt": 1718295576268,
       "labels" : ["critical", "need-CR"]
+    }, {
+      
+      "_id": "G34bQ",
+      "title": "bug3",
+      "description": "problem",
+      "severity": 1,
+      "createdAt": 1718295576269,
+      "labels" : []
     }
+    
   ]

@@ -37,7 +37,7 @@ app.get('/api/bug', (req, res) => {
     pageIdx: +req.query.pageIdx || 0,
     sortBy: req.query.sortBy || '',
     sortDir: req.query.sortDir || '1',
-    labels: req.query.labels ? req.query.labels.split(',') : []
+    labels: req.query.labels || ''
   }
 
   bugService.query(filterBy)
@@ -69,28 +69,31 @@ app.delete('/api/bug/:id', (req, res) => {
 })
 
 app.put('/api/bug/:id', (req, res) => {
-  const { _id, title, description, severity, createdAt } = req.body
+  const { _id, title, description, severity, createdAt, labels } = req.body
   const bugToSave = {
     _id,
     title: title || '',
     description: description || '',
     severity: +severity || 0,
     createdAt: +createdAt || 0,
+    labels: labels || []
   }
-
+  console.log('bugToSave-server:', bugToSave)
   bugService.save(bugToSave)
-    .then(savedBug => res.send(savedBug))
+  .then(savedBug => res.send(savedBug))
 })
 
 app.post('/api/bug', (req, res) => {
-  const { title, description, severity, createdAt } = req.body
+  const { title, description, severity, createdAt, labels } = req.body
   const bugToSave = {
     title: title || '',
     description: description || '',
     severity: +severity || 0,
     createdAt: +createdAt || 0,
+    labels: labels || []
   }
-
+  
+  console.log('bugToSave-server:', bugToSave)
   bugService.save(bugToSave)
     .then(savedBug => res.send(savedBug))
 })

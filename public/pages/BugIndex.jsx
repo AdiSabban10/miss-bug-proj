@@ -41,6 +41,7 @@ export function BugIndex() {
       title: prompt('Bug title?'),
       description: prompt('Bug description?'),
       severity: +prompt('Bug severity?'),
+      // labels: []
     }
     
     bugService.save(bug)

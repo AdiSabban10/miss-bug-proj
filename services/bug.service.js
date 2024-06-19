@@ -21,7 +21,11 @@ function query(filterBy) {
     if (filterBy.minSeverity) {
         filteredBugs = filteredBugs.filter(bug => bug.severity >= filterBy.minSeverity)
     }
-    
+    // Filtering by labels
+    if (filterBy.labels && filterBy.labels.length > 0) {
+        const labels = filterBy.labels.split(',')
+        filteredBugs = filteredBugs.filter(bug => labels.every(label => bug.labels.includes(label)))
+    }
     // Sorting
     if (filterBy.sortBy) {
         const sortDir = filterBy.sortDir === '-1' ? -1 : 1
@@ -60,7 +64,7 @@ function save(bugToSave) {
     } else {
         bugToSave._id = utilService.makeId()
         bugToSave.createdAt = Date.now()
-        bugs.push(bugToSave)
+        bugs.unshift(bugToSave)
     }
     return _saveBugsToFile()
         .then(() => bugToSave)
