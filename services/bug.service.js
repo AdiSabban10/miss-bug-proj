@@ -7,16 +7,29 @@ export const bugService = {
     save
 }
 
+const PAGE_SIZE = 3
 var bugs = utilService.readJsonFile('./data/bug.json')
 
 function query(filterBy = { txt: '', minSeverity: 0 }) {
     const { txt, minSeverity } = filterBy
-  const regExp = new RegExp(txt, 'i')
-  var filteredBugs = bugs.filter(
-    (bug) =>
-      (regExp.test(bug.title || regExp.test(bug.description))) &&
-      bug.severity >= minSeverity
-  )
+//   const regExp = new RegExp(txt, 'i')
+//   var filteredBugs = bugs.filter(
+//     (bug) =>
+//       ((regExp.test(bug.title) || regExp.test(bug.description))) &&
+//       bug.severity >= minSeverity
+//   )
+    var filteredBugs = bugs
+
+    if (filterBy.txt) {
+        const regExp = new RegExp(filterBy.txt, 'i')
+        filteredBugs = filteredBugs.filter(bug => regExp.test(bug.title) || regExp.test(bug.description))
+    }
+    if (filterBy.minSeverity) {
+        filteredBugs = filteredBugs.filter(bug => bug.severity >= filterBy.minSeverity)
+    }
+    const startIdx = filterBy.pageIdx * PAGE_SIZE
+    filteredBugs = filteredBugs.slice(startIdx, startIdx + PAGE_SIZE)
+
     return Promise.resolve(filteredBugs)
 }
 
