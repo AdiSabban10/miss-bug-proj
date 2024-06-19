@@ -37,11 +37,17 @@ export function BugIndex() {
   }
 
   function onAddBug() {
+    const title = prompt('Bug title?')
+    const description = prompt('Bug description?')
+    const severity = +prompt('Bug severity?')
+    const labelsInput = prompt('Bug labels (comma-separated)?')
+    const labels = labelsInput ? labelsInput.split(',').map(lbl => lbl.trim()) : []
+
     const bug = {
-      title: prompt('Bug title?'),
-      description: prompt('Bug description?'),
-      severity: +prompt('Bug severity?'),
-      // labels: []
+        title,
+        description,
+        severity,
+        labels
     }
     
     bugService.save(bug)
