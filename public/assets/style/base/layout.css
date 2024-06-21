@@ -13,6 +13,6 @@
 
 .container {
     max-width: 800px;
-    padding: 1em;
+    padding-inline: 1em;
     margin: auto;
 }

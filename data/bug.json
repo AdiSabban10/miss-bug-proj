@@ -1,110 +1,114 @@
 [
   {
-    "title": "www",
-    "description": "www",
-    "severity": 3,
-    "createdAt": 1718829432757,
-    "labels": [],
-    "_id": "BxYhQ"
+      "_id": "GwjbR",
+      "title": "Login Failure",
+      "description": "User unable to login",
+      "severity": 2,
+      "createdAt": 1718295576268,
+      "labels": [
+          "critical",
+          "need-CR"
+      ]
   },
   {
-    "title": "zzz",
-    "description": "zzz",
-    "severity": 4,
-    "createdAt": 1718829320336,
-    "labels": [],
-    "_id": "iQalH"
+      "_id": "QzjKm",
+      "title": "Page Load Error",
+      "description": "Main page fails to load",
+      "severity": 1,
+      "createdAt": 1718295576269,
+      "labels": [
+          "high",
+          "urgent"
+      ]
   },
   {
-    "title": "bug try",
-    "description": "bbbbbb",
-    "severity": 4,
-    "createdAt": 1718828439040,
-    "labels": [
-      "critical",
-      "need-CR"
-    ],
-    "_id": "A7GIR"
+      "_id": "NvjRw",
+      "title": "Button Not Clickable",
+      "description": "Submit button not responding",
+      "severity": 3,
+      "createdAt": 1718295576270,
+      "labels": [
+          "medium",
+          "need-CR",
+          "urgent"
+      ]
   },
   {
-    "_id": "oPkTw",
-    "title": "ddd",
-    "description": "ddd",
-    "severity": 4,
-    "createdAt": 1718824070608,
-    "labels": []
+      "_id": "JzkRt",
+      "title": "Form Validation Issue",
+      "description": "Form fields not validating correctly",
+      "severity": 2,
+      "createdAt": 1718295576271,
+      "labels": [
+          "critical",
+          "high"
+      ]
   },
   {
-    "title": "bb",
-    "description": "bb",
-    "severity": 1,
-    "createdAt": 1718809341058,
-    "labels": [],
-    "_id": "1JxSZ"
+      "_id": "MzjPf",
+      "title": "Database Connection Lost",
+      "description": "Intermittent loss of database connection",
+      "severity": 1,
+      "createdAt": 1718295576272,
+      "labels": [
+          "urgent",
+          "critical"
+      ]
   },
   {
-    "_id": "ZX0gQ",
-    "title": "bbuugg",
-    "description": "error",
-    "severity": 4,
-    "createdAt": 1718817637293,
-    "labels": []
+      "_id": "LkjQw",
+      "title": "CSS Styling Broken",
+      "description": "Styles not loading on homepage",
+      "severity": 4,
+      "createdAt": 1718295576273,
+      "labels": [
+          "medium",
+          "need-CR",
+          "dev-branch"
+      ]
   },
   {
-    "_id": "hzN2R",
-    "title": "bug 10",
-    "description": "broblem",
-    "severity": 3,
-    "createdAt": 1718797994706,
-    "labels": []
+      "_id": "WkjPl",
+      "title": "API Timeout",
+      "description": "API requests timing out",
+      "severity": 5,
+      "createdAt": 1718295576274,
+      "labels": [
+          "high",
+          "urgent"
+      ]
   },
   {
-    "_id": "GwjbR",
-    "title": "bug2",
-    "description": "problem problem",
-    "severity": 2,
-    "createdAt": 1718295576268,
-    "labels": [
-      "critical",
-      "need-CR"
-    ]
+      "_id": "PzlSk",
+      "title": "Memory Leak",
+      "description": "Memory usage continuously increases",
+      "severity": 1,
+      "createdAt": 1718295576275,
+      "labels": [
+          "critical",
+          "urgent"
+      ]
   },
   {
-    "title": "Bug3",
-    "description": "problem when clicking button",
-    "severity": 1,
-    "createdAt": 1718816946612,
-    "labels": [],
-    "_id": "MzPwh"
+      "_id": "XpjQl",
+      "title": "Image Upload Fails",
+      "description": "Unable to upload images",
+      "severity": 4,
+      "createdAt": 1718295576276,
+      "labels": [
+          "medium",
+          "need-CR"
+      ]
   },
   {
-    "title": "Error",
-    "description": "problem when clicking play",
-    "severity": 1,
-    "createdAt": 1718817216432,
-    "labels": [],
-    "_id": "xTuf3"
-  },
-  {
-    "_id": "U3Feb",
-    "title": "Error while watching",
-    "description": "problem when clicking play",
-    "severity": 2,
-    "createdAt": 1542107359454,
-    "labels": [
-      "need-CR",
-      "dev-branch"
-    ]
-  },
-  {
-    "_id": "g28bX",
-    "title": "Warning appears",
-    "description": "warning appears when clicking edit",
-    "severity": 3,
-    "createdAt": 1542107359454,
-    "labels": [
-      "critical",
-      "dev-branch"
-    ]
+      "_id": "YtkRe",
+      "title": "Search Function Broken",
+      "description": "Search returns incorrect results",
+      "severity": 2,
+      "createdAt": 1718295576277,
+      "labels": [
+          "high",
+          "critical"
+      ]
   }
 ]

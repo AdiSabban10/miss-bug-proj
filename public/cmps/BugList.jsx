@@ -4,7 +4,7 @@ import {BugPreview} from './BugPreview.jsx'
 
 export function BugList({bugs, onRemoveBug, onEditBug}) {
   return (
-    <ul className="bug-list">
+    <ul className="bug-list container">
       {bugs.map((bug) => (
         <li className="bug-preview" key={bug._id}>
           <BugPreview bug={bug} />
