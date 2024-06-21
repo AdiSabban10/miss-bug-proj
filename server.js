@@ -13,6 +13,25 @@ app.use(cookieParser())
 app.use(express.json())
 
 // Express Routing:
+app.get('/api/bug', (req, res) => {
+  const filterBy = {
+    txt: req.query.txt || '',
+    minSeverity: +req.query.minSeverity || 0,
+    pageIdx: +req.query.pageIdx || 0,
+    sortBy: req.query.sortBy || '',
+    sortDir: req.query.sortDir || '1',
+    labels: req.query.labels || ''
+  }
+
+  bugService.query(filterBy)
+    .then(bugs => res.send(bugs))
+    .catch(err => {
+      loggerService.error(`Couldn't get bugs`, err)
+      res.status(500).send(`Couldn't get bugs`)
+    })
+})
+
+
 app.get('/api/bug/download', (req, res) => {
   const doc = new PDFDocument()
   doc.pipe(fs.createWriteStream('bugs.pdf'))
@@ -30,23 +49,6 @@ app.get('/api/bug/download', (req, res) => {
 })
 
 
-app.get('/api/bug', (req, res) => {
-  const filterBy = {
-    txt: req.query.txt || '',
-    minSeverity: +req.query.minSeverity || 0,
-    pageIdx: +req.query.pageIdx || 0,
-    sortBy: req.query.sortBy || '',
-    sortDir: req.query.sortDir || '1',
-    labels: req.query.labels || ''
-  }
-
-  bugService.query(filterBy)
-    .then(bugs => res.send(bugs))
-    .catch(err => {
-      loggerService.error(`Couldn't get bugs...`)
-      res.status(500).send(`Couldn't get bugs...`)
-    })
-})
 
 app.get('/api/bug/:id', (req, res) => {
   const { id } = req.params
@@ -59,6 +61,10 @@ app.get('/api/bug/:id', (req, res) => {
 
   bugService.getById(id)
     .then(bug => res.send(bug))
+    .catch(err => {
+      loggerService.error(`Couldn't get bug (${id})`, err)
+      res.status(500).send(`Couldn't get bug (${id})`)
+    })
 })
 
 app.delete('/api/bug/:id', (req, res) => {
@@ -66,9 +72,13 @@ app.delete('/api/bug/:id', (req, res) => {
 
   bugService.remove(id)
     .then(() => res.send(`Bug ${id} deleted...`))
+    .catch(err => {
+      loggerService.error(`Couldn't delete bug (${id})`, err)
+      res.status(500).send(`Couldn't delete bug (${id})`)
+    })
 })
 
-app.put('/api/bug/:id', (req, res) => {
+app.put('/api/bug', (req, res) => {
   const { _id, title, description, severity, createdAt, labels } = req.body
   const bugToSave = {
     _id,
@@ -78,9 +88,13 @@ app.put('/api/bug/:id', (req, res) => {
     createdAt: +createdAt || 0,
     labels: labels || []
   }
-  console.log('bugToSave-server:', bugToSave)
+
   bugService.save(bugToSave)
-  .then(savedBug => res.send(savedBug))
+    .then(savedBug => res.send(savedBug))
+    .catch(err => {
+      loggerService.error(`Couldn't update bug (${_id})`, err)
+      res.status(500).send(`Couldn't update bug (${_id})`)
+    })
 })
 
 app.post('/api/bug', (req, res) => {
@@ -92,10 +106,13 @@ app.post('/api/bug', (req, res) => {
     createdAt: +createdAt || 0,
     labels: labels || []
   }
-  
-  console.log('bugToSave-server:', bugToSave)
+
   bugService.save(bugToSave)
     .then(savedBug => res.send(savedBug))
+    .catch(err => {
+      loggerService.error(`Couldn't add bug`, err)
+      res.status(500).send(`Couldn't add bug`)
+    })
 })
 
 
