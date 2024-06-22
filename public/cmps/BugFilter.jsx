@@ -1,16 +1,11 @@
 const { useState, useEffect } = React
 
-export function BugFilter({ filterBy, onSetFilterBy }) {
+export function BugFilter({ filterBy, onSetFilterBy, labels: availableLabels, pageCount }) {
     const [filterByToEdit, setFilterByToEdit] = useState(filterBy)
-    const [selectedLabels, setSelectedLabels] = useState([])
-
+    
     useEffect(() => {
         onSetFilterBy(filterByToEdit)
     }, [filterByToEdit])
-
-    useEffect(() => {
-        setFilterByToEdit(prevFilter => ({ ...prevFilter, labels: selectedLabels.join(',') }))
-    }, [selectedLabels])
 
     function handleChange({ target }) {
         const field = target.name
@@ -23,7 +18,7 @@ export function BugFilter({ filterBy, onSetFilterBy }) {
                 break;
 
             case 'checkbox':
-                value = target.checked ? '-1' : '1'
+                value = target.checked ? -1 : 1
                 break
 
             default:
@@ -34,26 +29,25 @@ export function BugFilter({ filterBy, onSetFilterBy }) {
     }
 
     function handleLabelChange({ target }) {
-        const label = target.name
-        const isChecked = target.checked
+        const { name: label, checked: isChecked } = target
 
-        setSelectedLabels(prevLabels => {
-            if (isChecked) {
-                return [...prevLabels, label]
-            } else {
-                return prevLabels.filter(lbl => lbl !== label)
-            }
-        })
+        setFilterByToEdit(prevFilter => ({
+            ...prevFilter,
+            pageIdx: 0,
+            labels: isChecked
+                ? [...prevFilter.labels, label]
+                : prevFilter.labels.filter(lbl => lbl !== label)
+        }))
     }
 
     function onGetPage(diff) {
-        if (filterByToEdit.pageIdx + diff < 0) return
-        setFilterByToEdit(prev => ({ ...prev, pageIdx: prev.pageIdx + diff }))
+        let pageIdx = filterByToEdit.pageIdx + diff
+        if (pageIdx < 0) pageIdx = pageCount - 1
+        if (pageIdx > pageCount - 1) pageIdx = 0
+        setFilterByToEdit(prev => ({ ...prev, pageIdx }))
     }
-
-    const { txt, severity, sortBy, sortDir } = filterByToEdit
-
-    const availableLabels = ['critical', 'need-CR', 'dev-branch']
+    
+    const { txt, severity, sortBy, sortDir, labels } = filterByToEdit
 
     return (
         <section className="bug-filter">
@@ -88,7 +82,7 @@ export function BugFilter({ filterBy, onSetFilterBy }) {
                         <input
                             type="checkbox"
                             name={label}
-                            checked={selectedLabels.includes(label)}
+                            checked={labels.includes(label)}
                             onChange={handleLabelChange}
                         />
                         {label}
@@ -109,7 +103,7 @@ export function BugFilter({ filterBy, onSetFilterBy }) {
                     type="checkbox"
                     name="sortDir"
                     id="sortDir"
-                    checked={sortDir === '-1'}
+                    checked={sortDir === -1}
                     onChange={handleChange}
                 />
 
@@ -117,10 +111,6 @@ export function BugFilter({ filterBy, onSetFilterBy }) {
                 <span>{filterByToEdit.pageIdx + 1}</span>
                 <button onClick={() => onGetPage(1)}>+</button>
             </div>
-
-
-
-
         </section>
     )
 }

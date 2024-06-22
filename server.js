@@ -19,8 +19,8 @@ app.get('/api/bug', (req, res) => {
     minSeverity: +req.query.minSeverity || 0,
     pageIdx: +req.query.pageIdx || 0,
     sortBy: req.query.sortBy || '',
-    sortDir: req.query.sortDir || '1',
-    labels: req.query.labels || ''
+    sortDir: +req.query.sortDir || 1,
+    labels: req.query.labels || []
   }
 
   bugService.query(filterBy)
@@ -31,6 +31,24 @@ app.get('/api/bug', (req, res) => {
     })
 })
 
+app.get('/api/bug/labels', (req, res) => {
+  bugService.getLabels()
+    .then(labels => res.send(labels))
+    .catch(err => {
+      loggerService.error(`Couldn't get labels`, err)
+      res.status(500).send(`Couldn't get labels`)
+    })
+})
+
+app.get('/api/bug/pageCount', (req, res) => {
+  bugService.getPageCount()
+      .then(pageCount => res.send(pageCount + ''))
+      .catch(err => {
+          loggerService.error(`Couldn't get pageCount`, err)
+          res.status(500).send(`Couldn't get pageCount`)
+      })
+})
+
 
 app.get('/api/bug/download', (req, res) => {
   const doc = new PDFDocument()
@@ -38,14 +56,16 @@ app.get('/api/bug/download', (req, res) => {
   doc.fontSize(25).text('BUGS LIST').fontSize(16)
 
 
-  bugService.query().then((bugs) => {
-    bugs.forEach((bug) => {
-      var bugTxt = `${bug.title}: ${bug.description}. (severity: ${bug.severity})`
-      doc.text(bugTxt)
-    })
+  bugService.query()
+    .then((bugs) => {
+      bugs.forEach((bug) => {
+        var bugTxt = `${bug.title}: ${bug.description}. (severity: ${bug.severity})`
+        doc.text(bugTxt)
+      })
 
-    doc.end()
-  })
+      doc.end()
+      res.end()
+    })
 })
 
 
@@ -53,9 +73,9 @@ app.get('/api/bug/download', (req, res) => {
 app.get('/api/bug/:id', (req, res) => {
   const { id } = req.params
 
-  var visitedBugs = req.cookies.visitedBugs || []
+  const visitedBugs = req.cookies.visitedBugs || []
 
-  if (visitedBugs.length >= 3) res.status(401).send('Wait for a bit')
+  if (visitedBugs.length >= 3) return res.status(401).send('Wait for a bit')
   if (!visitedBugs.includes(id)) visitedBugs.push(id)
   res.cookie('visitedBugs', visitedBugs, { maxAge: 7000 })
 

@@ -6,7 +6,9 @@ export const bugService = {
     remove,
     save,
     getDefaultFilter,
-    onDownloadPdf,
+    downloadPdf,
+    getLabels,
+    getPageCount
 }
 
 function query(filterBy = {}) {
@@ -17,7 +19,10 @@ function query(filterBy = {}) {
 function getById(bugId) {
     return axios.get(BASE_URL + `/${bugId}`)
         .then(res => res.data)
-        .catch(console.log)
+        // .catch(err => {
+        //     console.log('err', err)
+        //     throw err
+        // })
 }
 
 function remove(bugId) {
@@ -26,20 +31,33 @@ function remove(bugId) {
 }
 
 function save(bug) {
-    if (bug._id) {
-        return axios.put(BASE_URL + '/' + bug._id, bug)
-            .then(res => res.data)
-    } else {
-        return axios.post(BASE_URL, bug)
-            .then(res => res.data)
-    }
+    const method = bug._id ? 'put' : 'post'
+    return axios[method](BASE_URL, bug)
+        .then(res => res.data)
+
+    // if (bug._id) {
+    //     return axios.put(BASE_URL, bug)
+    //         .then(res => res.data)
+    // } else {
+    //     return axios.post(BASE_URL, bug)
+    //         .then(res => res.data)
+    // }
+}
+
+function getLabels() {
+    return axios.get(BASE_URL + '/labels')
+        .then(res => res.data)
+}
+function getPageCount() {
+    return axios.get(BASE_URL + '/pageCount')
+        .then(res => res.data)
 }
 
 function getDefaultFilter() {
-    return { txt: '', minSeverity: 0, pageIdx: 0, sortBy: '', sortDir: '1', labels: '' }
+    return { txt: '', minSeverity: 0, pageIdx: 0, sortBy: '', sortDir: 1, labels: [] }
 }
 
-function onDownloadPdf(){
+function downloadPdf(){
     return axios.get(BASE_URL + '/download')
         .then(res => res.data)
 }

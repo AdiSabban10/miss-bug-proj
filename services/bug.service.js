@@ -4,7 +4,9 @@ export const bugService = {
     query,
     getById,
     remove,
-    save
+    save,
+    getLabels,
+    getPageCount
 }
 
 const PAGE_SIZE = 3
@@ -12,6 +14,7 @@ var bugs = utilService.readJsonFile('./data/bug.json')
 
 function query(filterBy) {
     var filteredBugs = bugs
+    if (!filterBy) return Promise.resolve(filteredBugs)
     // Filtering by text
     if (filterBy.txt) {
         const regExp = new RegExp(filterBy.txt, 'i')
@@ -23,19 +26,17 @@ function query(filterBy) {
     }
     // Filtering by labels
     if (filterBy.labels && filterBy.labels.length > 0) {
-        const labels = filterBy.labels.split(',')
-        filteredBugs = filteredBugs.filter(bug => labels.every(label => bug.labels.includes(label)))
+    // if (filterBy.labels?.length) {
+        filteredBugs = filteredBugs.filter(bug => filterBy.labels.every(label => bug.labels.includes(label)))
     }
     // Sorting
     if (filterBy.sortBy) {
-        const sortDir = filterBy.sortDir === '-1' ? -1 : 1
-        
         if(filterBy.sortBy === 'title') {
-            filteredBugs = filteredBugs.sort((bug1, bug2) => bug1.title.localeCompare(bug2.title) * sortDir)
+            filteredBugs = filteredBugs.sort((bug1, bug2) => bug1.title.localeCompare(bug2.title) * filterBy.sortDir)
         } else if(filterBy.sortBy === 'severity') {
-            filteredBugs = filteredBugs.sort((bug1, bug2) => (bug1.severity - bug2.severity) * sortDir)
+            filteredBugs = filteredBugs.sort((bug1, bug2) => (bug1.severity - bug2.severity) * filterBy.sortDir)
         } else if(filterBy.sortBy === 'createdAt') {
-            filteredBugs = filteredBugs.sort((bug1, bug2) => (bug1.createdAt - bug2.createdAt) * sortDir)
+            filteredBugs = filteredBugs.sort((bug1, bug2) => (bug1.createdAt - bug2.createdAt) * filterBy.sortDir)
         }
     }
 
@@ -68,6 +69,22 @@ function save(bugToSave) {
     }
     return _saveBugsToFile()
         .then(() => bugToSave)
+}
+
+function getLabels() {
+    return query().then(bugs => {
+        const bugsLabels = bugs.reduce((acc, bug) => {
+            return [...acc, ...bug.labels]
+        }, [])
+        console.log('bugsLabels:', bugsLabels)
+        return [...new Set(bugsLabels)]
+    })
+}
+
+function getPageCount() {
+    return query().then(bugs => {
+        return Math.ceil(bugs.length / PAGE_SIZE)
+    })
 }
 
 function _saveBugsToFile() {
