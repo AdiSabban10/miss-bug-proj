@@ -26,16 +26,16 @@ function query(filterBy) {
     }
     // Filtering by labels
     if (filterBy.labels && filterBy.labels.length > 0) {
-    // if (filterBy.labels?.length) {
+        // if (filterBy.labels?.length) {
         filteredBugs = filteredBugs.filter(bug => filterBy.labels.every(label => bug.labels.includes(label)))
     }
     // Sorting
     if (filterBy.sortBy) {
-        if(filterBy.sortBy === 'title') {
+        if (filterBy.sortBy === 'title') {
             filteredBugs = filteredBugs.sort((bug1, bug2) => bug1.title.localeCompare(bug2.title) * filterBy.sortDir)
-        } else if(filterBy.sortBy === 'severity') {
+        } else if (filterBy.sortBy === 'severity') {
             filteredBugs = filteredBugs.sort((bug1, bug2) => (bug1.severity - bug2.severity) * filterBy.sortDir)
-        } else if(filterBy.sortBy === 'createdAt') {
+        } else if (filterBy.sortBy === 'createdAt') {
             filteredBugs = filteredBugs.sort((bug1, bug2) => (bug1.createdAt - bug2.createdAt) * filterBy.sortDir)
         }
     }
@@ -51,20 +51,33 @@ function getById(bugId) {
     return Promise.resolve(bug)
 }
 
-function remove(bugId) {
+function remove(bugId, loggedinUser) {
     const idx = bugs.findIndex(bug => bug._id === bugId)
+    if (idx === -1) return Promise.reject('No Such Bug')
+    const bug = bugs[idx]
+    if (!loggedinUser.isAdmin &&
+        bug.creator._id !== loggedinUser._id) {
+        return Promise.reject('Not your Bug')
+    }
     bugs.splice(idx, 1)
-
     return _saveBugsToFile()
 }
 
-function save(bugToSave) {
-    if(bugToSave._id) {
-        const idx = bugs.findIndex(bug => bug._id === bugToSave._id)
-        bugs.splice(idx, 1, bugToSave)
+function save(bugToSave, loggedinUser) {
+    if (bugToSave._id) {
+        const existingBugIdx = bugs.findIndex(bug => bug._id === bugToSave._id)
+        if (existingBugIdx === -1) return Promise.reject('No Such Bug')
+
+        const existingBug = bugs[existingBugIdx]
+        if (!loggedinUser.isAdmin && existingBug.creator._id !== loggedinUser._id) {
+            return Promise.reject('Not your bug')
+        }
+
+        bugs[existingBugIdx] = { ...existingBug, ...bugToSave }
     } else {
         bugToSave._id = utilService.makeId()
         bugToSave.createdAt = Date.now()
+        bugToSave.creator = loggedinUser
         bugs.unshift(bugToSave)
     }
     return _saveBugsToFile()
@@ -76,7 +89,6 @@ function getLabels() {
         const bugsLabels = bugs.reduce((acc, bug) => {
             return [...acc, ...bug.labels]
         }, [])
-        console.log('bugsLabels:', bugsLabels)
         return [...new Set(bugsLabels)]
     })
 }
@@ -88,5 +100,5 @@ function getPageCount() {
 }
 
 function _saveBugsToFile() {
-    return  utilService.writeJsonFile('./data/bug.json', bugs)
+    return utilService.writeJsonFile('./data/bug.json', bugs)
 }

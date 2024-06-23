@@ -1,25 +1,59 @@
 [
   {
+    "title": "bug1",
+    "description": "bbbb",
+    "severity": 3,
+    "createdAt": 1719150663949,
+    "labels": [
+      "high"
+    ],
+    "_id": "IT9Dy",
+    "creator": {
+      "_id": "u102",
+      "fullname": "Puki Ja"
+    }
+  },
+  {
+    "title": "bug2",
+    "description": "bug bug",
+    "severity": 3,
+    "createdAt": 1719150663949,
+    "labels": [
+      "high"
+    ],
+    "_id": "IT8Dy"
+  },
+  {
     "_id": "GwjbR",
     "title": "Login Failure",
     "description": "User unable to login",
-    "severity": 2,
+    "severity": 1,
     "createdAt": 1718295576268,
     "labels": [
       "critical",
       "need-CR"
-    ]
+    ],
+    "creator": {
+      "_id": "u101",
+      "fullname": "Adi Sabban",
+      "isAdmin": true
+    }
   },
   {
     "_id": "QzjKm",
     "title": "Page Load Error",
     "description": "Main page fails to load",
-    "severity": 1,
+    "severity": 2,
     "createdAt": 1718295576269,
     "labels": [
       "high",
       "urgent"
-    ]
+    ],
+    "creator": {
+      "_id": "u101",
+      "fullname": "Adi Sabban",
+      "isAdmin": true
+    }
   },
   {
     "_id": "NvjRw",
@@ -31,7 +65,12 @@
       "medium",
       "need-CR",
       "urgent"
-    ]
+    ],
+    "creator": {
+      "_id": "u101",
+      "fullname": "Adi Sabban",
+      "isAdmin": true
+    }
   },
   {
     "_id": "JzkRt",
@@ -42,7 +81,12 @@
     "labels": [
       "critical",
       "high"
-    ]
+    ],
+    "creator": {
+      "_id": "u101",
+      "fullname": "Adi Sabban",
+      "isAdmin": true
+    }
   },
   {
     "_id": "MzjPf",
@@ -53,7 +97,12 @@
     "labels": [
       "urgent",
       "critical"
-    ]
+    ],
+    "creator": {
+      "_id": "u101",
+      "fullname": "Adi Sabban",
+      "isAdmin": true
+    }
   },
   {
     "_id": "LkjQw",
@@ -65,7 +114,12 @@
       "medium",
       "need-CR",
       "dev-branch"
-    ]
+    ],
+    "creator": {
+      "_id": "u101",
+      "fullname": "Adi Sabban",
+      "isAdmin": true
+    }
   },
   {
     "_id": "WkjPl",
@@ -76,7 +130,11 @@
     "labels": [
       "high",
       "urgent"
-    ]
+    ],
+    "creator": {
+      "_id": "u102",
+      "fullname": "Puki Ja"
+    }
   },
   {
     "_id": "PzlSk",
@@ -87,17 +145,25 @@
     "labels": [
       "critical",
       "urgent"
-    ]
+    ],
+    "creator": {
+      "_id": "u102",
+      "fullname": "Puki Ja"
+    }
   },
   {
     "_id": "XpjQl",
     "title": "Image Upload Fails",
     "description": "Unable to upload images",
-    "severity": 4,
+    "severity": 2,
     "createdAt": 1718295576276,
     "labels": [
       "medium",
       "need-CR"
-    ]
+    ],
+    "creator": {
+      "_id": "u103",
+      "fullname": "Muki Ba"
+    }
   }
 ]
