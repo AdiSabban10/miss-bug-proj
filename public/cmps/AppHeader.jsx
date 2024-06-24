@@ -6,6 +6,7 @@ import { UserMsg } from './UserMsg.jsx'
 import { LoginSignup } from './LoginSignup.jsx'
 import { userService } from '../services/user.service.js'
 import { showErrorMsg } from '../services/event-bus.service.js'
+import { UserIndex } from '../pages/UserIndex.jsx'
 
 export function AppHeader() {
   const navigate = useNavigate()

@@ -1,0 +1,16 @@
+.user-list {
+    padding: 15px;
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+    font-size: 1.5rem;
+}
+
+.user-list li {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    background-color: var(--clr1bg);
+}

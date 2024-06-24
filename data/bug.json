@@ -27,7 +27,7 @@
     "_id": "GwjbR",
     "title": "Login Failure",
     "description": "User unable to login",
-    "severity": 1,
+    "severity": 2,
     "createdAt": 1718295576268,
     "labels": [
       "critical",

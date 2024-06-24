@@ -1,11 +1,38 @@
+const BASE_URL = '/api/user'
 const STORAGE_KEY_LOGGEDIN_USER = 'loggedInUser'
 
 export const userService = {
+    query,
+    getById,
+    remove,
+    save,
     login,
     signup,
     logout,
     getLoggedinUser,
     getEmptyCredentials
+}
+
+function query() {
+    return axios.get(BASE_URL)
+        .then(res => res.data)
+}
+
+function getById(userId) {
+    return axios.get(BASE_URL + `/${userId}`)
+        .then(res => res.data)
+}
+
+function remove(userId) {
+    return axios.delete(BASE_URL + `/${userId}`)
+        .then(res => res.data)
+}
+
+function save(user) {
+    const method = user._id ? 'put' : 'post'
+    return axios[method](BASE_URL, user)
+        .then(res => res.data)
+    
 }
 
 function getLoggedinUser() {

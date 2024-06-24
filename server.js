@@ -35,7 +35,6 @@ app.get('/api/bug', (req, res) => {
     .catch(err => {
       loggerService.error(`Couldn't get bugs`, err)
       res.status(400).send(`Couldn't get bugs`)
-      // res.status(500).send(`Couldn't get bugs`)
     })
 })
 
@@ -45,7 +44,6 @@ app.get('/api/bug/labels', (req, res) => {
     .catch(err => {
       loggerService.error(`Couldn't get labels`, err)
       res.status(400).send(`Couldn't get labels`)
-      // res.status(500).send(`Couldn't get labels`)
     })
 })
 
@@ -55,7 +53,6 @@ app.get('/api/bug/pageCount', (req, res) => {
     .catch(err => {
       loggerService.error(`Couldn't get pageCount`, err)
       res.status(400).send(`Couldn't get pageCount`)
-      // res.status(500).send(`Couldn't get pageCount`)
     })
 })
 
@@ -94,7 +91,6 @@ app.get('/api/bug/:id', (req, res) => {
     .catch(err => {
       loggerService.error(`Couldn't get bug (${id})`, err)
       res.status(400).send(`Couldn't get bug (${id})`)
-      // res.status(500).send(`Couldn't get bug (${id})`)
     })
 })
 
@@ -113,7 +109,6 @@ app.delete('/api/bug/:id', (req, res) => {
     .catch(err => {
       loggerService.error(`Couldn't delete bug (${id})`, err)
       res.status(400).send(`Couldn't delete bug (${id})`)
-      // res.status(500).send(`Couldn't delete bug (${id})`)
     })
 })
 
@@ -138,7 +133,6 @@ app.put('/api/bug', (req, res) => {
     .catch(err => {
       loggerService.error(`Couldn't update bug (${_id})`, err)
       res.status(400).send(`Couldn't update bug (${_id})`)
-      // res.status(500).send(`Couldn't update bug (${_id})`)
     })
 })
 
@@ -161,11 +155,12 @@ app.post('/api/bug', (req, res) => {
     .catch(err => {
       loggerService.error(`Couldn't add bug`, err)
       res.status(400).send(`Couldn't add bug`)
-      // res.status(500).send(`Couldn't add bug`)
     })
 })
 
 // AUTH API
+
+// User LIST
 app.get('/api/user', (req, res) => {
   userService.query()
     .then((users) => {
@@ -177,14 +172,64 @@ app.get('/api/user', (req, res) => {
     })
 })
 
+// User READ
 app.get('/api/user/:id', (req, res) => {
   userService.getById(req.params.id)
-    .then((user) => {
-      res.send(user)
-    })
+    .then((user) => {res.send(user)})
     .catch((err) => {
       console.log('Cannot load user', err)
       res.status(400).send('Cannot load user')
+    })
+})
+
+// User DELETE
+app.delete('/api/user/:id', (req, res) => {
+  const { id } = req.params
+  userService.remove(id)
+    .then(() => {
+      loggerService.info(`User ${id} removed`)
+      res.send(`User ${id} deleted...`)
+    })
+    .catch(err => {
+      loggerService.error(`Couldn't delete user (${id})`, err)
+      res.status(400).send(`Couldn't delete user (${id})`)
+    })
+})
+
+// User UPDATE
+app.put('/api/user', (req, res) => {
+  const { _id, username, fullname, password } = req.body
+
+  const userToSave = {
+    _id,
+    username: username || '',
+    fullname: fullname || '',
+    password: password || '',
+  }
+
+  userService.save(userToSave)
+    .then(savedUser => res.send(savedUser))
+    .catch(err => {
+      loggerService.error(`Couldn't update user (${_id})`, err)
+      res.status(400).send(`Couldn't update user (${_id})`)
+    })
+})
+
+// User CREATE
+app.post('/api/user', (req, res) => {
+  const { username, fullname, password } = req.body
+
+  const userToSave = {
+    username: username || '',
+    fullname: fullname || '',
+    password: password || '',
+  }
+
+  userService.save(userToSave)
+    .then(savedUser => res.send(savedUser))
+    .catch(err => {
+      loggerService.error(`Couldn't add user`, err)
+      res.status(400).send(`Couldn't add user`)
     })
 })
 
@@ -222,9 +267,9 @@ app.post('/api/auth/logout', (req, res) => {
 })
 
 // Fallback route
-app.get('/**', (req, res) => {
-  res.sendFile(path.resolve('public/index.html'))
-})
+// app.get('/**', (req, res) => {
+//   res.sendFile(path.resolve('public/index.html'))
+// })
 
-const port = 3030
-app.listen(port, () => loggerService.info(`Server listening on port http://127.0.0.1:${port}/`))
+const PORT = 3030
+app.listen(PORT, () => loggerService.info(`Server listening on port http://127.0.0.1:${PORT}/`))
