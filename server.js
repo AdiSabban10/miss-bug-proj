@@ -24,7 +24,7 @@ app.get('/api/bug', (req, res) => {
   const filterBy = {
     txt: req.query.txt || '',
     minSeverity: +req.query.minSeverity || 0,
-    pageIdx: +req.query.pageIdx || 0,
+    pageIdx: +req.query.pageIdx || undefined,
     sortBy: req.query.sortBy || '',
     sortDir: +req.query.sortDir || 1,
     labels: req.query.labels || []
@@ -175,7 +175,7 @@ app.get('/api/user', (req, res) => {
 // User READ
 app.get('/api/user/:id', (req, res) => {
   userService.getById(req.params.id)
-    .then((user) => {res.send(user)})
+    .then((user) => { res.send(user) })
     .catch((err) => {
       console.log('Cannot load user', err)
       res.status(400).send('Cannot load user')
@@ -185,53 +185,21 @@ app.get('/api/user/:id', (req, res) => {
 // User DELETE
 app.delete('/api/user/:id', (req, res) => {
   const { id } = req.params
-  userService.remove(id)
+  bugService.hasBugs(id)
     .then(() => {
-      loggerService.info(`User ${id} removed`)
-      res.send(`User ${id} deleted...`)
-    })
-    .catch(err => {
-      loggerService.error(`Couldn't delete user (${id})`, err)
-      res.status(400).send(`Couldn't delete user (${id})`)
-    })
+      userService.remove(id)
+        .then(() => {
+          loggerService.info(`User ${id} removed`)
+          res.send(`User ${id} deleted...`)
+        })
+       
+      })
+      .catch(err => {
+        loggerService.error(`Couldn't delete user (${id})`, err)
+        res.status(400).send(`Couldn't delete user (${id})`)
+      })
 })
 
-// User UPDATE
-app.put('/api/user', (req, res) => {
-  const { _id, username, fullname, password } = req.body
-
-  const userToSave = {
-    _id,
-    username: username || '',
-    fullname: fullname || '',
-    password: password || '',
-  }
-
-  userService.save(userToSave)
-    .then(savedUser => res.send(savedUser))
-    .catch(err => {
-      loggerService.error(`Couldn't update user (${_id})`, err)
-      res.status(400).send(`Couldn't update user (${_id})`)
-    })
-})
-
-// User CREATE
-app.post('/api/user', (req, res) => {
-  const { username, fullname, password } = req.body
-
-  const userToSave = {
-    username: username || '',
-    fullname: fullname || '',
-    password: password || '',
-  }
-
-  userService.save(userToSave)
-    .then(savedUser => res.send(savedUser))
-    .catch(err => {
-      loggerService.error(`Couldn't add user`, err)
-      res.status(400).send(`Couldn't add user`)
-    })
-})
 
 app.post('/api/auth/login', (req, res) => {
   const credentials = req.body

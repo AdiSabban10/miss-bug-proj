@@ -4,14 +4,14 @@ export const userService = {
     login,
     signup,
     logout,
-    getLoggedinUser,
+    getLoggedInUser,
     getEmptyCredentials
 }
 
 const KEY = 'userDB'
 const STORAGE_KEY_LOGGEDIN_USER = 'loggedInUser'
 
-function getLoggedinUser() {
+function getLoggedInUser() {
     return JSON.parse(sessionStorage.getItem(STORAGE_KEY_LOGGEDIN_USER))
 }
 

@@ -4,6 +4,7 @@ import { userService } from "../services/user.service.js"
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service.js'
 
 export function UserIndex() {
+    const user = userService.getLoggedInUser()
     const [users, setUsers] = useState([])
 
     useEffect(() => {
@@ -35,6 +36,7 @@ export function UserIndex() {
 
     return (
         <main>
+            <h1>Hello, {user.fullname}</h1>
             <h2>User List</h2>
             <ul className="user-list container">
                 {users.map((user) => (

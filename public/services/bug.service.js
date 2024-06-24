@@ -12,6 +12,7 @@ export const bugService = {
 }
 
 function query(filterBy = {}) {
+    console.log('filterBy:', filterBy)
     return axios.get(BASE_URL, { params: filterBy })
         .then(res => res.data)
 }
@@ -54,7 +55,8 @@ function getPageCount() {
 }
 
 function getDefaultFilter() {
-    return { txt: '', minSeverity: 0, pageIdx: 0, sortBy: '', sortDir: 1, labels: [] }
+    // return { txt: '', minSeverity: 0, pageIdx: 0, sortBy: '', sortDir: 1, labels: [] }
+    return { txt: '', minSeverity: 0, userId: '', pageIdx: 0, sortBy: '', sortDir: 1, labels: [] }
 }
 
 function downloadPdf(){

@@ -2,7 +2,7 @@
   {
     "title": "bug1",
     "description": "bbbb",
-    "severity": 3,
+    "severity": 5,
     "createdAt": 1719150663949,
     "labels": [
       "high"
@@ -12,16 +12,6 @@
       "_id": "u102",
       "fullname": "Puki Ja"
     }
-  },
-  {
-    "title": "bug2",
-    "description": "bug bug",
-    "severity": 3,
-    "createdAt": 1719150663949,
-    "labels": [
-      "high"
-    ],
-    "_id": "IT8Dy"
   },
   {
     "_id": "GwjbR",

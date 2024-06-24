@@ -5,9 +5,13 @@ import { userService } from '../services/user.service.js'
 import { showErrorMsg } from '../services/event-bus.service.js'
 import { bugService } from '../services/bug.service.js'
 import { BugList } from '../cmps/BugList.jsx'
+import { loggerService } from '../../services/logger.service.js'
 
 export function UserDetails() {
     const [user, setUser] = useState(null)
+    // const [user, setUser] = useState(userService.getLoggedInUser())
+    // const user = userService.getLoggedInUser()
+    
     const [bugs, setBugs] = useState([])
     const { userId } = useParams()
     const navigate = useNavigate()
@@ -16,7 +20,6 @@ export function UserDetails() {
         loadUser()
         loadUserBugs()
     }, [])
-
 
     function loadUser() {
         userService.getById(userId)
@@ -29,13 +32,16 @@ export function UserDetails() {
             })
 
     }
+    
+
     function loadUserBugs() {
+        // bugService.query({ userId: user._id })
         bugService.query()
             .then(bugs => {
                 console.log('bugs:', bugs)
                 const userBugs = bugs.filter(bug => bug.creator && bug.creator._id === userId)
-                // const userBugs = bugs.filter(bug => bug.creator?._id === userId)
                 setBugs(userBugs)
+                // setBugs(bugs)
                 console.log('userBugs:', userBugs)
             })
             .catch(err => {

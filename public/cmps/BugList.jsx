@@ -4,7 +4,7 @@ import { userService } from "../services/user.service.js"
 import { BugPreview } from './BugPreview.jsx'
 
 export function BugList({ bugs, onRemoveBug, onEditBug }) {
-  const user = userService.getLoggedinUser()
+  const user = userService.getLoggedInUser()
 
   function isCreator(bug) {
     if (!user) return false

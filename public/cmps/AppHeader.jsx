@@ -10,7 +10,7 @@ import { UserIndex } from '../pages/UserIndex.jsx'
 
 export function AppHeader() {
   const navigate = useNavigate()
-  const [user, setUser] = useState(userService.getLoggedinUser())
+  const [user, setUser] = useState(userService.getLoggedInUser())
 
   function onLogout() {
     userService.logout()
